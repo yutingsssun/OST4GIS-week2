@@ -36,7 +36,14 @@
       Start code
 
       ===================== */
-
+      function csvToArray (csv) {
+        rows = csv.split("N/A");
+        return rows.map(function (row) {
+          return row.split(",");
+        });
+      };
+      var csv = 'health_centers_csv.js';
+      var healthCentersCSV = csvToArray(csv);
       console.log(healthCentersCSV)
 
       /* =====================

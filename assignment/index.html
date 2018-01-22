@@ -54,11 +54,42 @@
       Start code
 
       ===================== */
+      var jsonToCsv = function(json) {
+        var result = [];
+        for (var i = 0; i<json.length;i++){
+          if (i == 0){
+            result.push(Object.keys(json[i]));// get keys of the first object
+          }
+          result.push(Object.values(json[i]));// get values of each object
+        }
+        json = result;
+        console.log(json);
+      };
 
-      var jsonToCsv = function(json) { console.log(json); };
+      // Create customized icon.
+      var myIcon = L.icon({
+        iconUrl: 'images/marker-icon-2x.png',
+        iconSize: [38, 56],
+        iconAnchor: [9, 21],
+        popupAnchor: [-3, -14],
+        shadowUrl: 'images/marker-shadow.png',
+        shadowSize: [68, 95],
+        shadowAnchor: [22, 94]
+      });
 
-
-      var addMarkers = function(map) {};
+      var addMarkers = function(map) {
+        for (var i = 0; i < healthCenters.length; i++) {
+          if (healthCenters[i].DENTAL_PHONE === 'N/A') {// leave health centers with dental services to next step
+            L.marker([healthCenters[i].LAT, healthCenters[i].LNG]) // get location of each health center
+            .bindPopup( '<a href="' + healthCenters[i].WEBSITE + '" target="_blank">' + healthCenters[i].NAME + '</a>')
+            .addTo(map);
+          } else {
+            L.marker([healthCenters[i].LAT, healthCenters[i].LNG], {icon: myIcon})
+            .bindPopup( '<a href="' + healthCenters[i].WEBSITE + '" target="_blank">' + healthCenters[i].NAME + '</a>')
+            .addTo(map);
+          }
+        }
+      };
 
       /* =====================
 
